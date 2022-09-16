@@ -10,9 +10,9 @@
     dest: "~/"
 
 - name: "install npm"
-  become: true
+  become: yes
   apt:
-    name: ['npm', 'nodejs', 'tar', 'gzip', 'python3']
+    name: ['nodejs', 'npm', 'tar', 'gzip', 'python3']
     state: latest
 
 
