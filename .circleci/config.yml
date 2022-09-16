@@ -338,51 +338,7 @@ jobs:
           workflowid:
             "${CIRCLE_WORKFLOW_ID:0:7}"
 
-  deploy-backend:
-    docker:
-      - image: python:3.7-alpine3.11
-        environment:
-          NODE_ENV: "production"
-          VERSION: "1"
-          ENVIRONMENT: "production"
-          TYPEORM_CONNECTION: $TYPEORM_CONNECTION
-          TYPEORM_HOST: $TYPEORM_HOST
-          TYPEORM_USERNAME: $TYPEORM_USERNAME
-          TYPEORM_PASSWORD: $TYPEORM_PASSWORD
-          TYPEORM_DATABASE: $TYPEORM_DATABASE
-          TYPEORM_PORT: $TYPEORM_PORT
-          TYPEORM_ENTITIES: $TYPEORM_ENTITIES       
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints: ["9b:eb:fd:8c:e5:72:4e:10:fa:29:a3:b2:71:9c:f0:8c"]
-      - attach_workspace: 
-          at: ~/
-      - restore_cache:
-          keys:
-            - build-backend
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update ansible nodejs npm tar gzip
-      - run:
-          name: Deploy backend
-          command: |
-            cd backend
-            npm install
-            npm run build
-            cd ..
-            tar -C backend -czvf artifact.tar.gz .
-            cat ~/project/.circleci/ansible/inventory.txt
-            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/deploy-backend.yml
 
-      # Here's where you will add some code to rollback on failure 
-      - destroy-environment:
-          workflowid:
-            "${CIRCLE_WORKFLOW_ID:0:7}"  
-      - revert-migrations:
-          workflowid:
-            "${CIRCLE_WORKFLOW_ID:0:7}"
 
 
 
@@ -412,8 +368,8 @@ workflows:
           requires: [configure-infrastructure]
       - deploy-frontend:
           requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
       
 
 
