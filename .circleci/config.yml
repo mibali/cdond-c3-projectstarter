@@ -16,10 +16,10 @@ commands:
           when: on_fail
           command: |
             # Your code here
-            echo "destroying environment: << parameters.workflowid >>"
-            aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.workflowid >>
-            aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.workflowid >>
-            aws s3 rm s3://udapeople--<< parameters.workflowid >> --recursive
+            echo "destroying environment: <<parameters.workflowid>>"
+            aws cloudformation delete-stack --stack-name udapeople-backend-<<parameters.workflowid>>
+            aws cloudformation delete-stack --stack-name udapeople-frontend-<<parameters.workflowid>>
+            aws s3 rm s3://udapeople--<<parameters.workflowid>> --recursive
           
 jobs:
 
@@ -167,7 +167,7 @@ jobs:
           name: Add back-end ip to ansible inventory
           command: |
             # Your code here
-            exit 1
+            # exit 1
             Public_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:project,Values=udapeople" \
