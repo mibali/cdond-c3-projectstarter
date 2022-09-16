@@ -8,18 +8,17 @@ commands:
     parameters:
       # Add parameter here   
       workflowid:
-        type: string
-
+        type : string
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
+            echo "Destroying environment: <<parameters.workflowid>>"
             # Your code here
-            echo "destroying environment: <<parameters.workflowid>>"
             aws cloudformation delete-stack --stack-name udapeople-backend-<<parameters.workflowid>>
             aws cloudformation delete-stack --stack-name udapeople-frontend-<<parameters.workflowid>>
-            aws s3 rm s3://udapeople--<<parameters.workflowid>> --recursive
+            aws s3 rm s3://udapeople-<<parameters.workflowid>> --recursive
           
 jobs:
 
@@ -167,7 +166,6 @@ jobs:
           name: Add back-end ip to ansible inventory
           command: |
             # Your code here
-            # exit 1
             Public_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:project,Values=udapeople" \
@@ -178,11 +176,10 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure
+      # Here's where you will add some code to rollback on failure  
       - destroy-environment:
           workflowid:
-            "${CIRCLE_WORKFLOW_ID:0:7}"  
-
+            "${CIRCLE_WORKFLOW_ID:0:7}"     
 
 workflows:
   default:
