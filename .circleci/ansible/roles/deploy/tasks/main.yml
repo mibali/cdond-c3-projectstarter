@@ -1,4 +1,3 @@
-
 --- 
 - name: Copy artifact.tar.gz to EC2
   copy:
