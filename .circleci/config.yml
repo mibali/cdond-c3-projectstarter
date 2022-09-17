@@ -22,27 +22,27 @@ commands:
             aws s3 rm s3://udapeople-<<parameters.workflowid>> --recursive
 
 
-#   revert-migrations:
-    # description: Revert the last migration if successfully run in the current workflow.
-    # parameters:
-    #   # Add parameter here    
-    #   workflowid:
-    #     type : string
-    # steps:
-    #   - run:
-    #       name: Revert migrations
-    #       # Add when this will run
-    #       when: on_fail
-    #       command: |
-    #         # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-    #         SUCCESS=$(curl --insecure https://kvdb.io/XEtP9sz3Uy2Lb7RWu996QY/migration_<<parameters.workflowid>>)
-    #         echo $SUCCESS
-    #         if (($SUCCESS==1));
-    #         then
-    #           cd ~/project/backend
-    #           npm install           
-    #           npm run migrations:revert
-    #         fi
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      # Add parameter here    
+      workflowid:
+        type : string
+    steps:
+      - run:
+          name: Revert migrations
+          # Add when this will run
+          when: on_fail
+          command: |
+            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
+            SUCCESS=$(curl --insecure https://kvdb.io/XEtP9sz3Uy2Lb7RWu996QY/migration_<<parameters.workflowid>>)
+            echo $SUCCESS
+            if (($SUCCESS==1));
+            then
+              cd ~/project/backend
+              npm install           
+              npm run migrations:revert
+            fi
             
 
 
