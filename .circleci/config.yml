@@ -3,23 +3,23 @@ orbs:
   slack: circleci/slack@4.10.1
   #node: circleci/node@x.y #can remove if job fails
 
-# commands:
-#   destroy-environment:
-#     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-#     parameters:
-#       # Add parameter here   
-#       workflowid:
-#         type : string
-#     steps:
-#       - run:
-#           name: Destroy environments
-#           when: on_fail
-#           command: |
-#             echo "Destroying environment: <<parameters.workflowid>>"
-#             # Your code here
-#             aws cloudformation delete-stack --stack-name udapeople-backend-<<parameters.workflowid>>
-#             aws cloudformation delete-stack --stack-name udapeople-frontend-<<parameters.workflowid>>
-#             aws s3 rm s3://udapeople-<<parameters.workflowid>> --recursive
+commands:
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    parameters:
+      # Add parameter here   
+      workflowid:
+        type : string
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            echo "Destroying environment: <<parameters.workflowid>>"
+            # Your code here
+            aws cloudformation delete-stack --stack-name udapeople-backend-<<parameters.workflowid>>
+            aws cloudformation delete-stack --stack-name udapeople-frontend-<<parameters.workflowid>>
+            aws s3 rm s3://udapeople-<<parameters.workflowid>> --recursive
 
 
 #   revert-migrations:
