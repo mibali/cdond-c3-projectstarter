@@ -1,92 +1,44 @@
-# --- 
+---
+- name: "update apt"
+  become: true
+  apt:
+    update_cache: yes
+
+- name: "upgrade apt packages"
+  become: true
+  apt:
+    upgrade: "yes"
+
+- name: "install dependencies."
+  become: true
+  apt:
+    name: ["nodejs", "npm"]
+    state: latest
+    update_cache: yes
+
+- name: "install n"
+  become: true
+  npm:
+    name: n
+    global: yes
+    production: yes
+
+- name: "install nodejs 12.20.1"
+  become: true
+  shell: n 12.20.1
+
+- name: "install pm2"
+  become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
+
 # - name: Copy artifact.tar.gz to EC2
 #   copy:
 #     src: "files/artifact.tar.gz"
 #     dest: "~/"
-
-# - name: Extract zipped file
-#   unarchive: 
-#     src: "files/artifact.tar.gz"
-#     dest: "~/"
-
-# - name: "install npm"
-#   become: yes
-#   apt:
-#     # name: ['nodejs', 'npm', 'tar', 'gzip', 'python3']
-#     name: npm
-#     state: latest
-
-
-# - name: "install pm2"
-#   become: yes
-#   apt:
-#     name: pm2
-#     global: yes
-#     state: latest
-
-# - name: "stop default"
-#   become: yes
-#   command: pm2 stop default
-
-# - name: "start the app"
-#   become: yes
-#   command: pm2 start npm -- start
-
-# ---
-#   - name: Copy files
-#     become: true
-#     copy:
-#       src: /root/project/artifact.tar.gz
-#       dest: /home/ubuntu/artifact.tar.gz
-#   - name: Unarchive
-#     become: true
-#     shell : |
-#         cd /home/ubuntu/
-#         tar xvzf artifact.tar.gz -C .
-#   - name: "run server"
-#     become: true
-#     shell : |
-#         cd /home/ubuntu/
-#         npm install
-#         pm2 stop default
-#         pm2 start npm -- start
-#     environment:
-#       ENVIRONMENT: production
-#       TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
-#       TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
-#       TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
-#       TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
-#       TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST') }}"
-#       TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
-#       TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
-#       TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
-
-# ---
-#   - name: Copy files
-#     become: true
-#     copy:
-#       src: /root/project/artifact.tar.gz
-#       dest: /home/ubuntu/artifact.tar.gz
-
-#   - name: Unarchive
-#     become: true
-#     shell : |
-#         cd /home/ubuntu/
-#         tar xvzf artifact.tar.gz -C .
-
-#   - name: "run server"
-#     become: true
-#     shell : |
-#         cd /home/ubuntu/
-#         npm install pm2 -g
-#         pm2 stop default
-#         pm2 start npm -- start
-
---- 
-- name: Copy artifact.tar.gz to EC2
-  copy:
-    src: "files/artifact.tar.gz"
-    dest: "~/"
 
 - name: Extract zipped file
   unarchive: 
@@ -94,18 +46,18 @@
     dest: "~/"
 
 - name: start app
+  become: yes
   shell: |
-    npm install
-    pm2 stop default
+    pm2 delete all
     pm2 start npm -- start
 
-  environment:
-    #ENVIRONMENT: production
-    TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
-    TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
-    TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
-    TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
-    TYPEORM_HOST: 5432
-    TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
-    TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
-    TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
+  # environment:
+  #   #ENVIRONMENT: production
+  #   TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
+  #   TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
+  #   TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
+  #   TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
+  #   TYPEORM_HOST: 5432
+  #   TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+  #   TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
+  #   TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
