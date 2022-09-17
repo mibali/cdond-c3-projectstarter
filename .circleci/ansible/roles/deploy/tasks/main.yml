@@ -61,7 +61,7 @@
 #       TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
 #       TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
 
---
+---
   - name: Copy files
     become: true
     copy:
