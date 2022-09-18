@@ -455,13 +455,13 @@ jobs:
             else
               return 1
             fi
-      # Here's where you will add some code to rollback on failure  
-      # - destroy-environment:
-      #     workflowid:
-      #       "${CIRCLE_WORKFLOW_ID:0:7}" 
-      # - revert-migrations:
-      #     workflowid:
-      #       "${CIRCLE_WORKFLOW_ID:0:7}"
+      Here's where you will add some code to rollback on failure  
+      - destroy-environment:
+          workflowid:
+            "${CIRCLE_WORKFLOW_ID:0:7}" 
+      - revert-migrations:
+          workflowid:
+            "${CIRCLE_WORKFLOW_ID:0:7}"
 
 
 
