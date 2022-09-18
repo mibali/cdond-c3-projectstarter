@@ -413,7 +413,7 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update --no-cache curl aws-cli nodejs npm
+            apk add --update --no-cache curl aws-cli nodejs npm openssh
       - run:
           name: Get backend url
           command: |
