@@ -49,15 +49,15 @@
   become: yes
   shell: |
     pm2 delete all
-    sudo pm2 start npm -- start
+    pm2 start npm -- start
 
-  environment:
-    ENVIRONMENT: production
-    TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
-    TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
-    TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
-    TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
-    TYPEORM_HOST: 5432
-    TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
-    TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
-    TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
+  # environment:
+  #   ENVIRONMENT: production
+  #   TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
+  #   TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
+  #   TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
+  #   TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
+  #   TYPEORM_HOST: 5432
+  #   TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+  #   TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
+  #   TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
