@@ -49,7 +49,7 @@
   become: yes
   shell: |
     pm2 delete all
-    sudo pm2 start npm -- start
+    pm2 start npm -- start
 
   # environment:
   #   ENVIRONMENT: production

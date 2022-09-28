@@ -405,7 +405,7 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image 
-      - image: python:3.7-alpine3.16
+      - image: alpine:latest
     steps:
       # Checkout code from git
       - checkout
@@ -429,7 +429,7 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            export BACKEND_IP=$(aws ec2 describe-instances \
+            BACKEND_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:project,Values=udapeople" \
             --output text)
@@ -438,9 +438,9 @@ jobs:
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
             then
-                return 0
+              return 0
             else
-                return 1
+              return 1 
             fi
       - run:
           name: Frontend smoke test.
